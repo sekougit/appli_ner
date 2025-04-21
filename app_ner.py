@@ -6,7 +6,7 @@ from pathlib import Path
 
 # Chemin du modèle dans Google Drive (utilisation de gdown)
 GDRIVE_URL = "https://drive.google.com/drive/folders/1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W?usp=sharing"
-MODEL_DIR = Path("ner_model")
+MODEL_DIR = Path("model-best")
 
 @st.cache_resource
 def download_and_load_model():

@@ -10,7 +10,7 @@ MODEL_DIR = Path("model-best")
 
 @st.cache_resource
 def download_and_load_model():
-    zip_path = "ner_model.zip"
+    zip_path = "model-best.zip"
     
     # Télécharger le modèle
     if not Path(zip_path).exists():

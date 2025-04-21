@@ -1,17 +1,3 @@
 streamlit
-spacy>=3.0.0
-tqdm
-scikit-learn
-pandas
-pathlib
-# Si tu utilises un modèle pré-entraîné avec FastText ou d'autres embeddings
-# ajoute fasttext ou gensim si nécessaire
-
-# Facultatif, si tu veux interagir avec les fichiers .spacy ou faire du prétraitement
-numpy
-
-# Pour les vecteurs FastText si tu les utilises manuellement :
-# fasttext
-
-# Si tu veux activer l'affichage Streamlit pour les entités avec displacy
-spacy-streamlit
+spacy
+gdown

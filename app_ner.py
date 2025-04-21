@@ -16,7 +16,7 @@ def download_and_load_model():
     os.makedirs(EXTRACT_DIR, exist_ok=True)
 
     # ✅ Remplacer ici par ton vrai ID de modèle Google Drive
-    gdown.download("https://drive.google.com/uc?id=1MbqZc1cRHMXh_QVQ1EHk_gmva4J0jWOp", ZIP_NAME, quiet=False)
+    gdown.download("https://drive.google.com/uc?id=1MCEW0B8N7I-AJl7zw7h23zRwgnsaD-ai", ZIP_NAME, quiet=False)
 
     # Vérifie que c’est bien un zip valide
     if not zipfile.is_zipfile(ZIP_NAME):

@@ -5,7 +5,7 @@ import zipfile
 from pathlib import Path
 
 # Chemin du modèle dans Google Drive (utilisation de gdown)
-GDRIVE_URL = "https://drive.google.com/drive/folders/1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W?usp=sharing"
+GDRIVE_URL = "https://drive.google.com/drive/folders/1MbqZc1cRHMXh_QVQ1EHk_gmva4J0jWOp?usp=sharing"
 MODEL_DIR = Path("model-best")
 
 @st.cache_resource

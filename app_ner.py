@@ -2,44 +2,50 @@ import streamlit as st
 import spacy
 import gdown
 import zipfile
-from pathlib import Path
+import os
+import shutil
 
-# Chemin du modèle dans Google Drive (utilisation de gdown)
-GDRIVE_URL = "https://drive.google.com/uc?id=1MbqZc1cRHMXh_QVQ1EHk_gmva4J0jWOp"
-MODEL_DIR = Path("ner_model")
+ZIP_NAME = "ner_model.zip"
+EXTRACT_DIR = "ner_model_extracted"
 
 @st.cache_resource
 def download_and_load_model():
-    zip_path = "ner_model.zip"
-    
-    # Télécharger le modèle
-    if not Path(zip_path).exists():
-        st.info("Téléchargement du modèle...")
-        gdown.download(GDRIVE_URL, zip_path, quiet=False)
+    # Supprimer les anciens fichiers
+    if os.path.exists(EXTRACT_DIR):
+        shutil.rmtree(EXTRACT_DIR)
+    os.makedirs(EXTRACT_DIR, exist_ok=True)
 
-    # Extraire l'archive
-    if not MODEL_DIR.exists():
-        st.info("Extraction du modèle...")
-        with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall(MODEL_DIR)
+    # ✅ Remplacer ici par ton vrai ID de modèle Google Drive
+    gdown.download("https://drive.google.com/uc?id=1MbqZc1cRHMXh_QVQ1EHk_gmva4J0jWOp", ZIP_NAME, quiet=False)
 
-    # Charger le modèle spaCy
-    st.success("Modèle chargé avec succès.")
-    return spacy.load(MODEL_DIR)
+    # Vérifie que c’est bien un zip valide
+    if not zipfile.is_zipfile(ZIP_NAME):
+        raise ValueError("❌ Le fichier téléchargé n'est pas un ZIP valide.")
 
-# UI
-st.title("🧠 Application NER avec spaCy")
-st.write("Entrez un texte pour détecter les entités nommées :")
+    # Extraire le zip
+    with zipfile.ZipFile(ZIP_NAME, "r") as zip_ref:
+        zip_ref.extractall(EXTRACT_DIR)
 
-text_input = st.text_area("Texte à analyser", "Barack Obama was born in Hawaii and was elected president in 2008.")
+    # Chercher récursivement le dossier contenant meta.json
+    for root, dirs, files in os.walk(EXTRACT_DIR):
+        if "meta.json" in files:
+            st.success(f"✅ Modèle trouvé dans : {root}")
+            return spacy.load(root)
+
+    raise FileNotFoundError("❌ Aucun fichier meta.json trouvé dans le ZIP.")
+
+# Charger le modèle
+nlp = download_and_load_model()
+
+# Interface utilisateur
+st.title("🔍 Détection d'entités nommées (NER)")
+text = st.text_area("✍️ Entrez un texte pour détecter les entités :")
 
 if st.button("Analyser"):
-    nlp = download_and_load_model()
-    doc = nlp(text_input)
-
-    st.subheader("🟢 Entités détectées :")
-    for ent in doc.ents:
-        st.markdown(f"- **{ent.text}** ({ent.label_})")
-
-    st.subheader("🔍 Texte avec entités surlignées :")
-    st.markdown(spacy.displacy.render(doc, style="ent", page=True), unsafe_allow_html=True)
+    if text.strip():
+        doc = nlp(text)
+        st.markdown("### 📌 Entités détectées :")
+        for ent in doc.ents:
+            st.write(f"**{ent.text}** → *{ent.label_}*")
+    else:
+        st.warning("Veuillez entrer un texte.")

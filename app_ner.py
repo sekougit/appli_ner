@@ -8,6 +8,8 @@ import shutil
 ZIP_NAME = "ner_model.zip"
 EXTRACT_DIR = "ner_model_extracted"
 
+
+
 @st.cache_resource
 def download_and_load_model():
     # Supprimer les anciens fichiers

@@ -1,40 +1,45 @@
 import streamlit as st
 import spacy
 import gdown
-import os
+import zipfile
+from pathlib import Path
 
-# Titre de l'application
-st.title("🔍 Application NER avec spaCy")
-#1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W
+# Chemin du modèle dans Google Drive (utilisation de gdown)
+GDRIVE_URL = "https://drive.google.com/drive/folders/1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W?usp=sharing"
+MODEL_DIR = Path("ner_model")
 
-# ID du fichier .spacy sur Google Drive
-file_id = "1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W"  # <- Remplace par ton propre ID
-output_path = "ner_model/model-best.spacy"
-
-# Télécharger le modèle depuis Google Drive si non existant
-if not os.path.exists(output_path):
-    st.info("📥 Téléchargement du modèle depuis Google Drive...")
-    url = f"https://drive.google.com/drive/folders/1CXsQCyrKzGzcoF-p5RptpVh7Ix8q8V4W?usp=sharing"
-    os.makedirs("ner_model", exist_ok=True)
-    gdown.download(url, output_path, quiet=False)
-
-# Charger le modèle
 @st.cache_resource
-def load_model():
-    return spacy.load(output_path)
-
-nlp = load_model()
-
-# Zone de texte
-text = st.text_area("Entrez un texte à analyser :", "Barack Obama was born in Hawaii.")
-
-# Analyse du texte
-if st.button("Analyser"):
-    doc = nlp(text)
-    st.subheader("📄 Résultats de la Reconnaissance d'Entités Nommées")
+def download_and_load_model():
+    zip_path = "ner_model.zip"
     
-    if doc.ents:
-        for ent in doc.ents:
-            st.markdown(f"**{ent.text}** → `{ent.label_}`")
-    else:
-        st.write("Aucune entité reconnue.")
+    # Télécharger le modèle
+    if not Path(zip_path).exists():
+        st.info("Téléchargement du modèle...")
+        gdown.download(GDRIVE_URL, zip_path, quiet=False)
+
+    # Extraire l'archive
+    if not MODEL_DIR.exists():
+        st.info("Extraction du modèle...")
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall(MODEL_DIR)
+
+    # Charger le modèle spaCy
+    st.success("Modèle chargé avec succès.")
+    return spacy.load(MODEL_DIR)
+
+# UI
+st.title("🧠 Application NER avec spaCy")
+st.write("Entrez un texte pour détecter les entités nommées :")
+
+text_input = st.text_area("Texte à analyser", "Barack Obama was born in Hawaii and was elected president in 2008.")
+
+if st.button("Analyser"):
+    nlp = download_and_load_model()
+    doc = nlp(text_input)
+
+    st.subheader("🟢 Entités détectées :")
+    for ent in doc.ents:
+        st.markdown(f"- **{ent.text}** ({ent.label_})")
+
+    st.subheader("🔍 Texte avec entités surlignées :")
+    st.markdown(spacy.displacy.render(doc, style="ent", page=True), unsafe_allow_html=True)

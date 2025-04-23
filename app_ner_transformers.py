@@ -6,7 +6,7 @@ import shutil
 import json
 from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
 
-#https://drive.google.com/file/d/10pcCB-47bl-jQ53t8AB1_F0LD6wHNwIU/view?usp=sharing
+#https://drive.google.com/drive/folders/1whJVqx1Nmxwim-DIoUM2686qbfIRQAFu?usp=sharing
 
 #https://drive.google.com/file/d/1bfdQHkuHS-Y9ww9AjEslazRqEc_hL47f/view?usp=sharing
 
@@ -14,7 +14,7 @@ from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassificatio
 ZIP_NAME = "transformer_model.zip"
 EXTRACT_DIR = "transformer_model_extracted"
 METRICS_FILE = "metrics_transformers.json"
-DRIVE_ZIP_URL = "https://drive.google.com/uc?id=10pcCB-47bl-jQ53t8AB1_F0LD6wHNwIU"
+DRIVE_ZIP_URL = "https://drive.google.com/uc?id=1whJVqx1Nmxwim-DIoUM2686qbfIRQAFu"
 DRIVE_METRICS_URL = "https://drive.google.com/uc?id=1bfdQHkuHS-Y9ww9AjEslazRqEc_hL47f"
 
 # 📥 Télécharger et charger le modèle

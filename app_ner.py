@@ -8,13 +8,13 @@ import json
 
 #https://drive.google.com/file/d/1MCEW0B8N7I-AJl7zw7h23zRwgnsaD-ai/view?usp=sharing
 
-#https://drive.google.com/file/d/1Z3YE7sBbH0tR1XHpDU5e7uO7ewwUmSXi/view?usp=sharing
+#https://drive.google.com/file/d/13mLjhVIYPgclai5lQnj9EdaBBBT1O9w7/view?usp=sharing
 
 ZIP_NAME = "ner_model.zip"
 EXTRACT_DIR = "ner_model_extracted"
 METRICS_FILE = "metrics.json"
 DRIVE_ZIP_URL = "https://drive.google.com/uc?id=1MCEW0B8N7I-AJl7zw7h23zRwgnsaD-ai"
-DRIVE_METRICS_URL = "https://drive.google.com/uc?id=1Z3YE7sBbH0tR1XHpDU5e7uO7ewwUmSXi"  # Remplace par le bon ID
+DRIVE_METRICS_URL = "https://drive.google.com/uc?id=13mLjhVIYPgclai5lQnj9EdaBBBT1O9w7"  # Remplace par le bon ID
 
 # 📥 Télécharger et charger le modèle
 @st.cache_resource
@@ -68,12 +68,12 @@ elif page == "📊 Performances":
     precision = metrics['ents_p']
     recall = metrics['ents_r']
     f1 = metrics['ents_f']
-    score_global = (precision + recall + f1) / 3
+    acc = metrics['ents_acc']
 
     st.metric("🎯 Précision", f"{precision:.2f}%")
     st.metric("📥 Rappel", f"{recall:.2f}%")
     st.metric("⚖️ F1-Score", f"{f1:.2f}%")
-    st.metric("⭐ Score global", f"{score_global:.2f}%")
+    st.metric("⭐ Accuracy", f"{acc:.2f}%")
 
 
 elif page == "📝 Détection d'entités":

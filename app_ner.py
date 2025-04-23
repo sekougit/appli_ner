@@ -12,7 +12,7 @@ import json
 
 ZIP_NAME = "ner_model.zip"
 EXTRACT_DIR = "ner_model_extracted"
-METRICS_FILE = "metrics.json"
+METRICS_FILE = "metrics_spacy.json"
 DRIVE_ZIP_URL = "https://drive.google.com/uc?id=1MCEW0B8N7I-AJl7zw7h23zRwgnsaD-ai"
 DRIVE_METRICS_URL = "https://drive.google.com/uc?id=13mLjhVIYPgclai5lQnj9EdaBBBT1O9w7"  # Remplace par le bon ID
 

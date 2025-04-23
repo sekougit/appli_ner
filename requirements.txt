@@ -3,3 +3,4 @@ gdown
 transformers==4.37.2
 torch==2.0.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
 protobuf<4.0.0
+sentencepiece

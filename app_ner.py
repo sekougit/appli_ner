@@ -57,7 +57,7 @@ page = st.sidebar.radio("Aller à :", ["🏠 Accueil", "📊 Performances", "�
 if page == "🏠 Accueil":
     st.title("🔍 Détection d'entités nommées (NER)")
     st.markdown("""
-Ce modèle de Reconnaissance d’Entités Nommées (NER) a été conçu pour identifier automatiquement des entités spécifiques telles que les personnes, lieux, organisations, dates, etc., dans vos textes. Il permet d’extraire de manière structurée des informations clés à partir de contenus non structurés.
+    Ce modèle de Reconnaissance d'Entités Nommées (NER) a été entraîné pour détecter des entités spécifiques dans vos textes.
     
     **Sources :** données personnelles – entraîné avec spaCy.
     """)
